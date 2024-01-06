@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+
+        文章分类: <input type="text" v-model="searchConditions.category">
+
+        发布状态: <input type="text" v-model="searchConditions.state">
+
+        <button @click="search">搜索</button>
+
+        <br />
+        <br />
+        <table border="1 solid" colspa="0" cellspacing="0">
+            <tr>
+                <th>文章标题</th>
+                <th>分类</th>
+                <th>发表时间</th>
+                <th>状态</th>
+                <th>操作</th>
+            </tr>
+            <tr v-for="(i,index) in articleList">
+                <td>{{i.title}}</td>
+                <td>{{i.category}}</td>
+                <td>{{i.time}}</td>
+                <td>{{i.state}}</td>
+                <td>
+                    <button>编辑</button>
+                    <button>删除</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script src="./axios.min.js"></script>
+    <script type="module">
+        import {createApp} from "./vue.esm-browser.js";
+        createApp({
+            data(){
+                return{
+                    articleList:[],
+                    searchConditions:{
+                        category:"",
+                        state:""
+                    }
+                }
+            },
+            mounted:function() {
+                axios.get("http://localhost:8080/article/getAll")
+                .then(result=>{
+                    console.log(result);
+                    this.articleList = result.data;
+                })
+                .catch(err=>{console.log(err);})
+            },
+            methods: {
+                search:function(){
+                    const that = this;
+                    axios.get("http://localhost:8080/article/search?category="+this.searchConditions.category
+                    +"&state="+this.searchConditions.state)
+                    .then(function(res){
+                        console.log(res.data);
+                        that.articleList = res.data;
+                        
+                    })
+                    /* .then(result=>{
+                        this.articleList = result.data;
+                    }) */
+                    .catch(err=>{console.log(err)})
+                }
+            },
+        }).mount("#app");
+    </script>
+</body>
+
+</html>

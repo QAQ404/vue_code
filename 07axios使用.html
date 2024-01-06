@@ -6,7 +6,45 @@
     <title>Document</title>
 </head>
 <body>
+
     <script src="./axios.min.js"></script>
+    <script>
+        let article={
+            title:"明天",
+            category:"生活",
+            time:"2020-01-01",
+            state:"草稿"
+        }
+       /*  axios({
+            method:'get',
+            url:'http://localhost:8080/article/getAll'
+        }).then(function (res){
+            console.log(res);
+        }).catch(err=>{
+            console.log(err);
+        })
+        axios({
+            method:'post',
+            url:'http://localhost:8080/article/add',
+            data: article
+        }).then(result=>{
+            console.log(result.data);
+        }).catch(err=>{
+            console.log(err);
+        }) */
+
+        /* axios.get("http://localhost:8080/article/getAll").then(resul=>{
+            console.log(resul)
+        }).catch(err=>{
+            console.log(err);
+        })
+
+        axios.post("http://localhost:8080/article/add",article).then(resul=>{
+            console.log(resul)
+        }).catch(err=>{
+            console.log(err);
+        }) */
+    </script>
 
 </body>
 </html>
